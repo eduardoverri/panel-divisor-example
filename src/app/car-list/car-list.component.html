@@ -1,0 +1,8 @@
+<div class="car-list">
+  <h2>Top 20 Famous Car Brands</h2>
+  <ul>
+    <li *ngFor="let car of carBrands">
+      {{ car.name }} ({{ car.country }}) - Founded in {{ car.year }}
+    </li>
+  </ul>
+</div>

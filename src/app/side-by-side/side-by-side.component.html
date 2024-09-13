@@ -1,0 +1,10 @@
+<div class="container">
+  <button (click)="toggleVisibility()">Toggle Visibility</button>
+  <div class="left" [class.hidden]="isLeftHidden" #leftDiv>
+    <ng-container *ngComponentOutlet="leftComponent"></ng-container>
+  </div>
+  <div class="divider" (mousedown)="onMouseDown($event)"></div>
+  <div class="right" [class.hidden]="isRightHidden" #rightDiv>
+    <ng-container *ngComponentOutlet="rightComponent"></ng-container>
+  </div>
+</div>
