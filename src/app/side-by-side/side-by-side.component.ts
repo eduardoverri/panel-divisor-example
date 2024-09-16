@@ -1,4 +1,4 @@
-import { Component, Input, Type, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, Input, Type, ViewChild, ElementRef, Renderer2, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-side-by-side',
@@ -22,24 +22,24 @@ export class SideBySideComponent {
     this.isRightHidden = !this.isRightHidden;
   }
 
+  isResizing = false;
+
   onMouseDown(event: MouseEvent) {
-    event.preventDefault();
-    const startX = event.pageX;
-    const startLeftWidth = this.leftDiv.nativeElement.offsetWidth;
-    const startRightWidth = this.rightDiv.nativeElement.offsetWidth;
-
-    const onMouseMove = (moveEvent: MouseEvent) => {
-      const deltaX = moveEvent.pageX - startX;
-      this.renderer.setStyle(this.leftDiv.nativeElement, 'width', `${startLeftWidth + deltaX}px`);
-      this.renderer.setStyle(this.rightDiv.nativeElement, 'width', `${startRightWidth - deltaX}px`);
-    };
-
-    const onMouseUp = () => {
-      document.removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('mouseup', onMouseUp);
-    };
-
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseup', onMouseUp);
+    this.isResizing = true;
   }
+
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(event: MouseEvent) {
+    if (this.isResizing) {
+      // Logic to resize the divs
+      const leftDiv = document.getElementById('leftDiv');
+      const rightDiv = document.getElementById('rightDiv');
+      if (leftDiv && rightDiv) {
+        const totalWidth = leftDiv.offsetWidth + rightDiv.offsetWidth;
+        const newLeftWidth = event.clientX;
+        const newRightWidth = totalWidth - newLeftWidth;
+        leftDiv.style.width = `${newLeftWidth}px`;
+        rightDiv.style.width = `${newRightWidth}px`;
+      }
+    }
 }
