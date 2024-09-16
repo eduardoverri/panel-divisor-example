@@ -1,4 +1,5 @@
 import { Component, Input, Type, ViewChild, ElementRef, Renderer2, HostListener } from '@angular/core';
+import { ColdObservable } from 'rxjs/internal/testing/ColdObservable';
 
 @Component({
   selector: 'app-side-by-side',
@@ -17,9 +18,11 @@ export class SideBySideComponent {
 
   constructor(private renderer: Renderer2) {}
 
-  toggleVisibility() {
-    this.isLeftHidden = !this.isLeftHidden;
-    this.isRightHidden = !this.isRightHidden;
+  toggleVisibility(panel: number) {
+    if (panel == 1)
+      this.isLeftHidden = !this.isLeftHidden;
+    else if (panel == 2)
+      this.isRightHidden = !this.isRightHidden;
   }
 
   isResizing = false;

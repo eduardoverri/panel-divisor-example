@@ -1,5 +1,6 @@
 <div class="container">
-  <button (click)="toggleVisibility()">Toggle Visibility</button>
+  <button (click)="toggleVisibility(1)">Toggle Visibility 1</button>
+  <button (click)="toggleVisibility(2)">Toggle Visibility 2</button>
   <div class="left" [class.hidden]="isLeftHidden" #leftDiv>
     <ng-container *ngComponentOutlet="leftComponent"></ng-container>
   </div>
